@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tech_media/utils/routes/route_name.dart';
 import 'package:tech_media/view/login/login_screen.dart';
+import 'package:tech_media/view/signup/sign_up_screen.dart';
 import 'package:tech_media/view/splash/splash_screen.dart';
 
 class Routes {
@@ -12,6 +13,9 @@ class Routes {
 
       case RouteName.loginScreen:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
+
+      case RouteName.registerScreen:
+        return MaterialPageRoute(builder: (_) => const RegisterScreen());
 
       default:
         return MaterialPageRoute(builder: (_) {
