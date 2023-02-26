@@ -8,4 +8,6 @@ class RouteName {
   static const String dashboardScreen = 'dashboard_view';
 
   static const String forgotPasswordScreen = 'forgot_view';
+
+  static const String profileScreen = 'profile_view';
 }

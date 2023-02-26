@@ -3,6 +3,7 @@ import 'package:tech_media/utils/routes/route_name.dart';
 import 'package:tech_media/view/dashboard.dart';
 import 'package:tech_media/view/forgot_password.dart';
 import 'package:tech_media/view/login_screen.dart';
+import 'package:tech_media/view/profile_screen.dart';
 import 'package:tech_media/view/sign_up_screen.dart';
 import 'package:tech_media/view/splash_screen.dart';
 
@@ -24,6 +25,9 @@ class Routes {
 
       case RouteName.forgotPasswordScreen:
         return MaterialPageRoute(builder: (_) => const ForgotPasswordScreen());
+
+      case RouteName.profileScreen:
+        return MaterialPageRoute(builder: (_) => const ProfileScreen());
 
       default:
         return MaterialPageRoute(builder: (_) {

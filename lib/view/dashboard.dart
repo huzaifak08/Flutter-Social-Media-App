@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_media/res/color.dart';
+import 'package:tech_media/view/profile_screen.dart';
 import 'package:tech_media/view_model/Provider/login_logout_providers.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
@@ -21,8 +22,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
       Center(child: Text('Home')),
       Center(child: Text('Chat')),
       Center(child: Text('Add')),
-      Center(child: Text('Profile')),
-      Center(child: Text('Exit to App')),
+      Center(child: Text('Message')),
+      ProfileScreen(),
     ];
   }
 
@@ -41,14 +42,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
           activeColorPrimary: AppColors.primaryIconColor,
           inactiveIcon: Icon(Icons.add, color: Colors.grey.shade100)),
       PersistentBottomNavBarItem(
+          icon: const Icon(Icons.chat),
+          activeColorPrimary: AppColors.primaryIconColor,
+          inactiveIcon: Icon(Icons.chat, color: Colors.grey.shade100)),
+      PersistentBottomNavBarItem(
           icon: const Icon(Icons.account_circle),
           activeColorPrimary: AppColors.primaryIconColor,
           inactiveIcon:
               Icon(Icons.account_circle, color: Colors.grey.shade100)),
-      PersistentBottomNavBarItem(
-          icon: const Icon(Icons.exit_to_app),
-          activeColorPrimary: AppColors.primaryIconColor,
-          inactiveIcon: Icon(Icons.exit_to_app, color: Colors.grey.shade100)),
     ];
   }
 
