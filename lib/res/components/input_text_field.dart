@@ -10,7 +10,6 @@ class InputTextField extends StatelessWidget {
   final String hint;
   final bool obsecureText;
   final bool enable, autoFocus;
-  final TextInputAction textInputAction;
 
   const InputTextField({
     super.key,
@@ -23,7 +22,6 @@ class InputTextField extends StatelessWidget {
     required this.obsecureText,
     this.enable = true,
     this.autoFocus = false,
-    this.textInputAction = TextInputAction.next,
   });
 
   @override
@@ -64,7 +62,6 @@ class InputTextField extends StatelessWidget {
               height: 0),
           contentPadding: const EdgeInsets.all(15),
         ),
-        textInputAction: textInputAction,
       ),
     );
   }
