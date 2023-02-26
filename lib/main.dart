@@ -114,7 +114,7 @@ class MyApp extends StatelessWidget {
       ),
 
       // You can't use home: property if you are using routing:
-      initialRoute: RouteName.loginScreen,
+      initialRoute: RouteName.splashScreen,
       onGenerateRoute: Routes.generateRoute,
     );
   }
