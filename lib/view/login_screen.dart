@@ -4,8 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:tech_media/res/components/input_text_field.dart';
 import 'package:tech_media/res/components/round_button.dart';
 import 'package:tech_media/utils/routes/route_name.dart';
-import 'package:tech_media/view/signup/sign_up_screen.dart';
-import 'package:tech_media/view_model/Provider/login_providers.dart';
+import 'package:tech_media/view_model/Provider/login_logout_providers.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -97,13 +96,19 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         Align(
                           alignment: Alignment.centerRight,
-                          child: Text('Forgot Password',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(
-                                      fontSize: 15,
-                                      decoration: TextDecoration.underline)),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, RouteName.forgotPasswordScreen);
+                            },
+                            child: Text('Forgot Password ?',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                        fontSize: 15,
+                                        decoration: TextDecoration.underline)),
+                          ),
                         ),
                         const SizedBox(height: 40),
                         RoundButton(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tech_media/view_model/Provider/login_providers.dart';
+import 'package:tech_media/view_model/Provider/login_logout_providers.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});

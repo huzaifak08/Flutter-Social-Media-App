@@ -6,4 +6,6 @@ class RouteName {
   static const String registerScreen = 'register_view';
 
   static const String dashboardScreen = 'dashboard_view';
+
+  static const String forgotPasswordScreen = 'forgot_view';
 }

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:tech_media/utils/routes/route_name.dart';
 import 'package:tech_media/view/dashboard.dart';
-import 'package:tech_media/view/login/login_screen.dart';
-import 'package:tech_media/view/signup/sign_up_screen.dart';
-import 'package:tech_media/view/splash/splash_screen.dart';
+import 'package:tech_media/view/forgot_password.dart';
+import 'package:tech_media/view/login_screen.dart';
+import 'package:tech_media/view/sign_up_screen.dart';
+import 'package:tech_media/view/splash_screen.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -20,6 +21,9 @@ class Routes {
 
       case RouteName.dashboardScreen:
         return MaterialPageRoute(builder: (_) => const DashboardScreen());
+
+      case RouteName.forgotPasswordScreen:
+        return MaterialPageRoute(builder: (_) => const ForgotPasswordScreen());
 
       default:
         return MaterialPageRoute(builder: (_) {
