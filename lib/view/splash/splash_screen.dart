@@ -26,8 +26,9 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
+        // ignore: prefer_const_literals_to_create_immutables
         children: [
-          Image(image: AssetImage('assets/images/logo.jpg')),
+          const Image(image: AssetImage('assets/images/logo.jpg')),
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 20),
             child: Center(
