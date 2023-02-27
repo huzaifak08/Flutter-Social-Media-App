@@ -158,17 +158,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 RoundButton(
                                   title: 'LogOut',
                                   onPressed: () {
-                                    // final auth = FirebaseAuth.instance;
-                                    // auth.signOut().then((value) {
-                                    //   provider.setLoading(true);
-                                    //   Navigator.pushReplacement(
-                                    //       context,
-                                    //       MaterialPageRoute(
-                                    //         builder: (context) =>
-                                    //             const LoginScreen(),
-                                    //       ));
-                                    //   Utils.toastMessage('Log Out');
-                                    // });
+                                    final auth = FirebaseAuth.instance;
+                                    auth.signOut().then((value) {
+                                      provider.setLoading(true);
+                                      SessionController().userId = '';
+                                      Navigator.pushNamed(
+                                          context, RouteName.loginScreen);
+                                      Utils.toastMessage('Log Out');
+                                    });
                                   },
                                   loading: provider.loading,
                                 )
