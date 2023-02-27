@@ -35,6 +35,7 @@ class InputTextField extends StatelessWidget {
         onFieldSubmitted: onFiledSubmissionValue,
         validator: onValidator,
         keyboardType: keyboardType,
+        cursorColor: AppColors.primaryTextTextColor,
         style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 19),
         decoration: InputDecoration(
           border: OutlineInputBorder(

@@ -1,10 +1,14 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_media/res/color.dart';
 import 'package:tech_media/res/components/round_button.dart';
+import 'package:tech_media/utils/routes/route_name.dart';
+import 'package:tech_media/utils/utils.dart';
+import 'package:tech_media/view/login_screen.dart';
 import 'package:tech_media/view_model/Provider/profile_provider.dart';
 import 'package:tech_media/view_model/services/session_controller.dart';
 
@@ -21,136 +25,171 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false, // Like Single Child Scroll View
         body: ChangeNotifierProvider(
-      create: (_) => ProfileProvider(),
-      child: Consumer<ProfileProvider>(
-        builder: (context, provider, child) {
-          return SafeArea(
-            child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: StreamBuilder(
-                  stream:
-                      ref.child(SessionController().userId.toString()).onValue,
-                  builder: (context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData) {
-                      if (snapshot.data != null) {
-                        // Recieve data in map:
+          create: (_) => ProfileProvider(),
+          child: Consumer<ProfileProvider>(
+            builder: (context, provider, child) {
+              return SafeArea(
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: StreamBuilder(
+                      stream: ref
+                          .child(SessionController().userId.toString())
+                          .onValue,
+                      builder: (context, AsyncSnapshot snapshot) {
+                        if (snapshot.hasData) {
+                          if (snapshot.data != null) {
+                            // Recieve data in map:
 
-                        Map<dynamic, dynamic> map =
-                            snapshot.data.snapshot.value;
+                            Map<dynamic, dynamic> map =
+                                snapshot.data.snapshot.value;
 
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Stack(
-                              alignment: Alignment.bottomCenter,
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Center(
-                                  child: Container(
-                                    height: 130,
-                                    width: 130,
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                          color: AppColors.secondaryTextColor,
-                                          width: 5,
-                                        )),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(100),
+                                Stack(
+                                  alignment: Alignment.bottomCenter,
+                                  children: [
+                                    Center(
+                                      child: Container(
+                                        height: 130,
+                                        width: 130,
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            border: Border.all(
+                                              color:
+                                                  AppColors.secondaryTextColor,
+                                              width: 5,
+                                            )),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(100),
 
-                                      // If profile pic is null then show this icon
+                                          // If profile pic is null then show this icon
 
-                                      child: provider.image == null
-                                          ? map['profile'].toString() == ''
-                                              ? const Icon(Icons.image)
-                                              : Image(
-                                                  image: NetworkImage(
-                                                      map['profile']
-                                                          .toString()),
-                                                  loadingBuilder: (context,
-                                                      child, loadingProgress) {
-                                                    // Must use this line:
-                                                    if (loadingProgress ==
-                                                        null) {
-                                                      return child;
-                                                    }
+                                          child: provider.image == null
+                                              ? map['profile'].toString() == ''
+                                                  ? const Icon(Icons.image)
+                                                  : Image(
+                                                      image: NetworkImage(
+                                                          map['profile']
+                                                              .toString()),
+                                                      loadingBuilder: (context,
+                                                          child,
+                                                          loadingProgress) {
+                                                        // Must use this line:
+                                                        if (loadingProgress ==
+                                                            null) {
+                                                          return child;
+                                                        }
 
-                                                    return const Center(
-                                                        child:
-                                                            CircularProgressIndicator());
-                                                  },
-                                                  errorBuilder: (context, error,
-                                                      stackTrace) {
-                                                    return const Center(
-                                                      child: Icon(
-                                                        Icons.error,
-                                                        color: AppColors
-                                                            .alertColor,
-                                                      ),
-                                                    );
-                                                  },
+                                                        return const Center(
+                                                            child:
+                                                                CircularProgressIndicator());
+                                                      },
+                                                      errorBuilder: (context,
+                                                          error, stackTrace) {
+                                                        return const Center(
+                                                          child: Icon(
+                                                            Icons.error,
+                                                            color: AppColors
+                                                                .alertColor,
+                                                          ),
+                                                        );
+                                                      },
+                                                      fit: BoxFit.cover,
+                                                    )
+                                              : Image.file(
+                                                  File(provider.image!.path)
+                                                      .absolute,
                                                   fit: BoxFit.cover,
-                                                )
-                                          : Image.file(
-                                              File(provider.image!.path)
-                                                  .absolute,
-                                              fit: BoxFit.cover,
-                                            ),
+                                                ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                    InkWell(
+                                      onTap: () {
+                                        provider.pickImage(context);
+                                      },
+                                      child: const CircleAvatar(
+                                        backgroundColor:
+                                            AppColors.primaryIconColor,
+                                        radius: 14,
+                                        child: Icon(
+                                          Icons.add,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                InkWell(
+                                const SizedBox(height: 40),
+                                GestureDetector(
                                   onTap: () {
-                                    provider.pickImage(context);
+                                    provider.showUserNameDialog(
+                                        context, map['userName']);
                                   },
-                                  child: const CircleAvatar(
-                                    backgroundColor: AppColors.primaryIconColor,
-                                    radius: 14,
-                                    child: Icon(
-                                      Icons.add,
-                                      color: Colors.white,
-                                    ),
+                                  child: ReuseableRow(
+                                    title: 'Username',
+                                    value: map['userName'],
+                                    iconData: Icons.person,
                                   ),
                                 ),
+                                GestureDetector(
+                                  onTap: () {
+                                    provider.showPhoneNumberDialog(
+                                        context, map['phone']);
+                                  },
+                                  child: ReuseableRow(
+                                    title: 'Phone',
+                                    value: map['phone'] == ''
+                                        ? 'xxx-xxx-xxx'
+                                        : map['phone'],
+                                    iconData: Icons.phone,
+                                  ),
+                                ),
+                                ReuseableRow(
+                                  title: 'Email',
+                                  value: map['email'],
+                                  iconData: Icons.email,
+                                ),
+                                const SizedBox(height: 40),
+                                RoundButton(
+                                  title: 'LogOut',
+                                  onPressed: () {
+                                    // final auth = FirebaseAuth.instance;
+                                    // auth.signOut().then((value) {
+                                    //   provider.setLoading(true);
+                                    //   Navigator.pushReplacement(
+                                    //       context,
+                                    //       MaterialPageRoute(
+                                    //         builder: (context) =>
+                                    //             const LoginScreen(),
+                                    //       ));
+                                    //   Utils.toastMessage('Log Out');
+                                    // });
+                                  },
+                                  loading: provider.loading,
+                                )
                               ],
-                            ),
-                            const SizedBox(height: 40),
-                            ReuseableRow(
-                              title: 'Username',
-                              value: map['userName'],
-                              iconData: Icons.person,
-                            ),
-                            ReuseableRow(
-                              title: 'Phone',
-                              value: map['phone'] == ''
-                                  ? 'xxx-xxx-xxx'
-                                  : map['phone'],
-                              iconData: Icons.phone,
-                            ),
-                            ReuseableRow(
-                              title: 'Email',
-                              value: map['email'],
-                              iconData: Icons.email,
-                            ),
-                            const SizedBox(height: 40),
-                            RoundButton(title: 'LogOut', onPressed: () {})
-                          ],
-                        );
-                      } else {
-                        return Text(
-                          'No Data',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        );
-                      }
-                    } else {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-                  },
-                )),
-          );
-        },
-      ),
-    ));
+                            );
+                          } else {
+                            return Text(
+                              'No Data',
+                              style: Theme.of(context).textTheme.titleMedium,
+                            );
+                          }
+                        } else {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        }
+                      },
+                    )),
+              );
+            },
+          ),
+        ));
   }
 }
 
