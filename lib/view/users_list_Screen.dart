@@ -1,6 +1,8 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:tech_media/view/message_screen.dart';
 import 'package:tech_media/view_model/services/session_controller.dart';
 
 class UserListScreen extends StatefulWidget {
@@ -31,6 +33,16 @@ class _UserListScreenState extends State<UserListScreen> {
             } else {
               return Card(
                 child: ListTile(
+                    onTap: () {
+                      PersistentNavBarNavigator.pushNewScreen(context,
+                          screen: MessageScreen(
+                              image: snapshot.child('profile').value.toString(),
+                              email: snapshot.child('email').value.toString(),
+                              name: snapshot.child('userName').value.toString(),
+                              recieverId:
+                                  snapshot.child('uid').value.toString()),
+                          withNavBar: false);
+                    },
                     title: Text(snapshot.child('userName').value.toString()),
                     subtitle: Text(snapshot.child('email').value.toString()),
                     leading: Container(
